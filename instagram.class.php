@@ -500,7 +500,7 @@ class Instagram {
       $paramString = null;
     }
     
-    $apiCall = self::API_URL . $function . $authMethod . (('GET' === $method) ? $paramString : null);
+    $apiCall = self::API_URL . $function . $authMethod . (('GET' === $method || 'DELETE' === $method) ? $paramString : null);
     
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $apiCall);

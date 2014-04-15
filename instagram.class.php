@@ -148,11 +148,14 @@ class Instagram {
    * Get user recent media
    *
    * @param integer [optional] $id        Instagram user ID
-   * @param integer [optional] $limit     Limit of returned results
+   * @param mixed [optional] $options   Options, or count if numeric
    * @return mixed
    */
-  public function getUserMedia($id = 'self', $limit = 0) {
-    return $this->_makeCall('users/' . $id . '/media/recent', ($id === 'self'), array('count' => $limit));
+  public function getUserMedia($id = 'self', $options = 0) {
+    $allowedOptions = array('count', 'max_timestamp', 'min_timestamp', 'max_id', 'min_id');
+    $options = (is_numeric($options) ? array('count' => $options) : $options);
+	$options = array_intersect_key($options, array_flip($allowedOptions));
+    return $this->_makeCall('users/' . $id . '/media/recent', ($id === 'self'), $options);
   }
 
   /**
